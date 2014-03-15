@@ -16,15 +16,10 @@ public class SimpleScene implements GLEventListener {
         GLCapabilities caps = new GLCapabilities(glp);
         GLCanvas canvas = new GLCanvas(caps);
 
-        Frame frame = new Frame("AWT Window Test");
-        frame.setSize(300, 300);
+        AWTFrameFactory frameFactory = new AWTFrameFactory(300, 300, "Main");
+        Frame frame = frameFactory.Create();
         frame.add(canvas);
-        frame.setVisible(true);
-        frame.addWindowListener(new WindowAdapter(){
-        	  public void windowClosing(WindowEvent we){
-        		    System.exit(0);
-        		  }
-        		});
+
         canvas.addGLEventListener(new SimpleScene());
     }
 
