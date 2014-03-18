@@ -3,8 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GlModel 
+public class GlModel implements java.io.Serializable
 {
+	private static final long serialVersionUID = 1L;
 	public List<ColoredVertex> ColoredVertexList;
 	
 	public GlModel()
