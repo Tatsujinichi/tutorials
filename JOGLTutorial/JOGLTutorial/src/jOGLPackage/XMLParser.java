@@ -23,5 +23,9 @@ public class XMLParser<T>
 		NodeList nodeList = element.getChildNodes();
 		int length = nodeList.getLength();
 		System.out.println(length);
+		for(int i = 0; i < length; i++)
+		{
+			System.out.println(nodeList.item(i).toString());
+		}
 	}
 }
