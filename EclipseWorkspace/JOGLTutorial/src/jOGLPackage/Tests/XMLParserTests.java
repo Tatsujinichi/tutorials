@@ -17,7 +17,7 @@ public class XMLParserTests
 	@Test
 	public void TestParseXMLFile()
 	{
-		String path = "C:\\DEV\\tutorials\\JOGLTutorial\\JOGLTutorial\\res\\cube.dae";
+		String path = "res\\cube.dae";
 		try
 		{
 			XMLParser.ParseXMLFile(path);

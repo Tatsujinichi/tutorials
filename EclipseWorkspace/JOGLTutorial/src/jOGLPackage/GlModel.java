@@ -6,15 +6,20 @@ import java.util.List;
 public class GlModel implements java.io.Serializable
 {
 	private static final long serialVersionUID = 1L;
-	public List<ColoredVertex> ColoredVertexList;
+	private List<D3Vertex> _vertexList;
 	
 	public GlModel()
 	{
-		ColoredVertexList = new ArrayList<ColoredVertex>();
+		_vertexList = new ArrayList<D3Vertex>();
 	}
 	
-	public void AddNewD3Tuple(ColoredVertex cv)
+	public void Add(D3Vertex v)
 	{
-		ColoredVertexList.add(cv);
+		_vertexList.add(v);
+	}
+	
+	public List<D3Vertex> GetVertexList()
+	{
+		return _vertexList;
 	}
 }

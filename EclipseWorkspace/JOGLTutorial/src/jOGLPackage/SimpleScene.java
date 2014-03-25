@@ -43,15 +43,15 @@ public class SimpleScene implements GLEventListener
 		gl.glBegin(GL.GL_TRIANGLES);
 		
 		GlModel model = new GlModel();
-		model.ColoredVertexList.add(new ColoredVertex(new D3Color(1, 0, 0), new D3Vertex(-1, -1, 0)));
-		model.ColoredVertexList.add(new ColoredVertex(new D3Color(0, 1, 0), new D3Vertex(0, 1, 0)));
-		model.ColoredVertexList.add(new ColoredVertex(new D3Color(0, 0, 1), new D3Vertex(1, -1, 0)));
+		model.Add(new D3Vertex(-1, -1, 0));
+		model.Add(new D3Vertex(0, 1, 0));
+		model.Add(new D3Vertex(1, -1, 0));
 
-		for(ColoredVertex vertex : model.ColoredVertexList)
+		for(D3Vertex vertex : model.GetVertexList())
 		{
-			gl.glColor3d(vertex.Color.D1, vertex.Color.D2, vertex.Color.D3);
+			//gl.glColor3d(vertex.Color.D1, vertex.Color.D2, vertex.Color.D3);
 			//TODO: investigate 'doublebuffer'
-			gl.glVertex3d(vertex.Vertex.D1, vertex.Vertex.D2, vertex.Vertex.D3); 
+			gl.glVertex3d(vertex.D1, vertex.D2, vertex.D3); 
 		}
 		
 		gl.glEnd();

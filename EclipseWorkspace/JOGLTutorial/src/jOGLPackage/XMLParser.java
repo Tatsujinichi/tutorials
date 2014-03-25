@@ -21,6 +21,10 @@ public class XMLParser<T>
 		Document doc = builder.parse(path);
 		Element element = doc.getDocumentElement();
 		NodeList nodeList = element.getChildNodes();
+		
+
+
+		
 		int length = nodeList.getLength();
 		System.out.println(length);
 		for(int i = 0; i < length; i++)
