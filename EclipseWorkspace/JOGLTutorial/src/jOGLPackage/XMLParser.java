@@ -1,6 +1,11 @@
 package jOGLPackage;
 
+import jOGLPackage.COLLADA.Geometry;
+import jOGLPackage.COLLADA.Mesh;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,48 +19,66 @@ import org.xml.sax.SAXException;
 
 public class XMLParser<T>
 {
-	public static void ParseXMLFile(String path) throws ParserConfigurationException, SAXException, IOException
+	public static Geometry ParseXMLFile(String path) throws ParserConfigurationException, SAXException, IOException
 	{
+		Geometry geometry;
+		Mesh mesh;
+		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(path);
-		doc.getDocumentElement().normalize();
-		//Element element = doc.getDocumentElement();
+		//doc.getDocumentElement().normalize();
+		Element element = doc.getDocumentElement();
 		
-		Node library_geometries = doc.getElementsByTagName("library_geometries").item(0);
-		Node geometries = library_geometries.get
-		Node mesh = geometries.getFirstChild();
-		NodeList sources = mesh.getChildNodes();
+		Element library_geometriesElement = GetFirstChildElementNodeByTag(element, "library_geometries");
+		Element geometryElement = GetFirstChildElementNodeByTag(library_geometriesElement, "geometry");
+		Element meshElement = GetFirstChildElementNodeByTag(geometryElement, "mesh");
+		List<Element> sourcePositionsElement = GetChildElementNodesByTag(meshElement, "source");
+		Element float_arrayElement = GetFirstChildElementNodeByTag(sourcePositionsElement.get(0), "float_array");
+		System.out.println(float_arrayElement.getTextContent());
 		
-		System.out.println(sources.getLength());
-		for(int i = 0; i < sources.getLength(); i++)
+
+		return null;
+		//return geometry;
+	}
+	
+	private static List<Element> GetChildElementNodesByTag(Node node, String tag)
+	{
+		List<Element> retList = new ArrayList<Element>();
+	
+		NodeList nodes = node.getChildNodes();
+		
+		int numberOfNodes = nodes.getLength();
+		for(int i = 0; i < numberOfNodes; i++)
 		{
-			Node node = sources.item(i);
-			System.out.println(node.getNodeName());
-			if (node.getNodeType() == Node.ELEMENT_NODE) 
-			{	 
-				Element element = (Element)node;
-				if(element.hasAttribute("Cube-mesh-positions"))
+			Node childNode = nodes.item(i);
+			if(childNode.getNodeType() == Node.ELEMENT_NODE)
+			{
+				if(childNode.getNodeName() == tag)
 				{
-					int count = Integer.parseInt(element.getAttribute("count"));
-					NodeList floatelements = element.getElementsByTagName("float_array");
-					Node floatNode = floatelements.item(0);
-					Element floatElement = (Element)floatNode;
-					String stringFloatArray = floatElement.getTextContent();
-					System.out.println(stringFloatArray);
-					//float_array
+					retList.add((Element)childNode);
 				}
 			}
 		}
+		return retList;
 	}
 	
-	private static String getValue(String tag, Element element) 
-	{
-		NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
-		Node node = (Node) nodes.item(0);
-		return node.getNodeValue();
+	private static Element GetFirstChildElementNodeByTag(Node node, String tag)
+	{	
+		NodeList nodes = node.getChildNodes();
+		
+		int numberOfNodes = nodes.getLength();
+		for(int i = 0; i < numberOfNodes; i++)
+		{
+			Node childNode = nodes.item(i);
+			if(childNode.getNodeType() == Node.ELEMENT_NODE)
+			{
+				if(childNode.getNodeName() == tag)
+				{
+					return (Element)childNode;
+				}
+			}
+		}
+		return null;
 	}
-
-
-		//Read more: http://javarevisited.blogspot.com/2011/12/parse-xml-file-in-java-example-tutorial.html#ixzz2xstzickE
 }
